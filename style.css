@@ -1,0 +1,210 @@
+/* RESET BÁSICO: remove espaçamentos padrão do navegador */
+* {
+  box-sizing: border-box; /* Faz o cálculo de largura incluir padding e borda */
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove espaçamentos internos padrão */
+}
+
+/* CORPO DA PÁGINA */
+body {
+  font-family: Arial, sans-serif; /* Define a fonte do site */
+  background-color: #ebe9e9; /* Cor de fundo (cinza claro) */
+  color: #1e293b; /* Cor padrão do texto */
+  font-size: 16px; /* Tamanho padrão da fonte */
+  line-height: 1.7; /* Espaçamento entre linhas */
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+  max-width: 1080px; /* Define largura máxima da página */
+  margin: 40px auto; /* Centraliza horizontalmente e dá espaço acima/baixo */
+  padding: 40px; /* Espaçamento interno */
+  background-color: #ffffff; /* Fundo branco */
+  border-radius: 10px; /* Cantos arredondados */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* Sombra leve */
+  /* Cria uma sombra ao redor do elemento
+
+   Ordem dos valores:
+   0  → deslocamento horizontal (não move para os lados)
+   4px → deslocamento vertical (sombra desce 4px)
+   16px → desfoque (quanto maior, mais "suave" fica a sombra)
+   rgba(0, 0, 0, 0.08) → cor da sombra
+      - rgb(0, 0, 0) = preto
+      - 0.08 = transparência (quase invisível, bem suave)
+
+   Resultado: uma sombra leve abaixo do elemento,
+   dando efeito de "cartão" ou "elevação" na página
+*/
+}
+
+/* MENU DE NAVEGAÇÃO */
+nav {
+  background-color: #2563eb; /* Cor de fundo azul */
+  padding: 14px; /* Espaçamento interno */
+  border-radius: 10px; /* Cantos arredondados */
+  margin-bottom: 30px; /* Espaço abaixo do menu */
+  text-align: center; /* Centraliza os links */
+}
+
+/* LINKS DO MENU */
+nav a {
+  color: #ffffff; /* Cor do texto (branco) */
+  text-decoration: none; /* Remove sublinhado */
+  margin: 0 10px; /* Espaço entre os links */
+  font-weight: bold; /* Texto em negrito */
+}
+
+/* EFEITO AO PASSAR O MOUSE */
+nav a:hover {
+  text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+/* TÍTULO PRINCIPAL */
+h1 {
+  font-size: 40px; /* Tamanho grande */
+  color: #1e40af; /* Azul escuro */
+  border-left: 5px solid #f59e0b; /* Barra decorativa lateral */
+  padding-left: 10px; /* Espaço entre a barra e o texto */
+  margin-bottom: 10px; /* Espaço abaixo */
+}
+
+/* SUBTÍTULO */
+h2 {
+  color: #0051ff; /* Azul */
+  margin-top: 20px; /* Espaço acima */
+}
+
+/* SUBTÍTULO MENOR */
+h3 {
+  color: #64748b; /* Cinza */
+  margin-top: 15px; /* Espaço acima */
+}
+
+/* PARÁGRAFOS */
+p {
+  margin-bottom: 12px; /* Espaço abaixo de cada parágrafo */
+}
+
+/* TEXTO EM NEGRITO */
+strong {
+  color: #d91313; /* Azul escuro */
+}
+
+/* TEXTO EM ÊNFASE (itálico) */
+em {
+  color: #5900f3; /* Roxo */
+}
+
+/* TEXTO MARCADO */
+mark {
+  background-color: #fef08a; /* Amarelo */
+}
+
+/* LINHA HORIZONTAL */
+hr {
+  margin: 20px 0; /* Espaço acima e abaixo */
+}
+
+/* LINKS GERAIS */
+a {
+  color: #2563eb; /* Azul */
+}
+
+/* LINK AO PASSAR O MOUSE */
+a:hover {
+  color: #f59e0b; /* Amarelo */
+}
+
+/* IMAGEM */
+img {
+  max-width: 120px; /* Limita o tamanho */
+  border-radius: 50%; /* Deixa a imagem redonda */
+  border: 3px solid #eb0000; /* Borda azul */
+  margin: 15px 0; /* Espaço acima e abaixo */
+}
+
+/* LISTAS */
+ul, ol {
+  margin-left: 20px; /* Recuo da lista */
+}
+
+/* FORMULÁRIO */
+form {
+  background-color: #c3c3c3; /* Fundo claro */
+  border: 1px solid #191919; /* Borda cinza */
+  border-radius: 10px; /* Cantos arredondados */
+  padding: 20px; /* Espaço interno */
+  margin-top: 20px; /* Espaço acima */
+}
+
+/* RÓTULOS (labels) */
+label {
+  font-weight: bold; /* Texto em negrito */
+}
+
+/* CAMPOS DE ENTRADA */
+input, textarea, select {
+  width: 100%; /* Ocupa toda a largura */
+  padding: 8px; /* Espaço interno */
+  margin-bottom: 10px; /* Espaço abaixo */
+  border: 1px solid #cbd5e1; /* Borda */
+  border-radius: 5px; /* Cantos arredondados */
+}
+
+/* BOTÃO */
+button {
+  background-color: #2563eb; /* Azul */
+  color: white; /* Texto branco */
+  padding: 10px 20px; /* Espaço interno */
+  border: none; /* Remove borda */
+  border-radius: 5px; /* Cantos arredondados */
+}
+
+/* BOTÃO AO PASSAR O MOUSE */
+button:hover {
+  background-color: #1e40af; /* Azul mais escuro */
+}
+
+/* TABELA */
+table {
+  width: 100%; /* Ocupa toda largura */
+  border-collapse: collapse; /* Junta as bordas */
+  margin-top: 20px; /* Espaço acima */
+}
+
+/* CABEÇALHO DA TABELA */
+th {
+  background-color: #2563eb; /* Fundo azul */
+  color: white; /* Texto branco */
+  padding: 10px; /* Espaço interno */
+}
+
+/* CÉLULAS */
+td {
+  padding: 10px; /* Espaço interno */
+  border: 1px solid #cbd5e1; /* Borda */
+}
+
+/* ELEMENTOS DE MÍDIA */
+video, audio, iframe {
+  margin: 15px 0; /* Espaço acima e abaixo */
+}
+
+/* BLOCO DE CÓDIGO */
+pre {
+  background-color: #1e293b; /* Fundo escuro */
+  padding: 15px; /* Espaço interno */
+  border-radius: 5px; /* Cantos arredondados */
+}
+
+/* TEXTO DO CÓDIGO */
+code {
+  color: #7dd3fc; /* Azul claro */
+}
+
+/* RODAPÉ */
+footer {
+  margin-top: 30px; /* Espaço acima */
+  text-align: center; /* Centraliza o texto */
+  font-size: 14px; /* Texto menor */
+}
