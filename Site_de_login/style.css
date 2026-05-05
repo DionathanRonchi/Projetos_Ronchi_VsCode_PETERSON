@@ -1,0 +1,78 @@
+body{
+    background: rgb(52, 14, 14);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+
+    font-family:Arial;
+}
+
+.login-box{
+    width:600px;
+}
+
+.topo{
+    background:#bbff00;
+
+    height:120px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.topo h1{
+    font-size:40px;
+
+    font-weight:normal;
+}
+
+.baixo{
+    background:#4305fe;
+
+    padding:50px;
+}
+
+form{
+    color:white;
+}
+
+input[type="text"],
+input[type="password"]{
+
+    width:100%;
+
+    height:60px;
+
+    border:none;
+
+    margin-top:10px;
+
+    padding-left:15px;
+
+    font-size:20px;
+
+    background:#999;
+}
+
+button{
+
+    width:200px;
+
+    height:60px;
+
+    border:none;
+
+    background:white;
+
+    font-size:25px;
+
+    cursor:pointer;
+}
