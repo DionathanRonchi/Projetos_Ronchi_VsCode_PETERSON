@@ -38,8 +38,17 @@ header{
     letter-spacing: 2px;
 }
 
-.logotipo span{
+.logotipo span,
+.logo span{
     color: #F0C808;
+}
+
+.logo,
+.logotipo{
+    font-size: 45px;
+    font-weight: 700;
+    color: #FFF1D0;
+    letter-spacing: 2px;
 }
 
 /* ================= MENU ================= */
@@ -53,7 +62,8 @@ nav ul li{
     margin-left: 30px;
 }
 
-nav ul li a{
+nav ul li a,
+nav > a {
     text-decoration: none;
     color: #FFF1D0;
 
@@ -64,8 +74,13 @@ nav ul li a{
     transition: 0.3s;
 }
 
-nav ul li a:hover{
+nav ul li a:hover,
+nav > a:hover{
     color: #F0C808;
+}
+
+nav > a{
+    margin-left: 30px;
 }
 
 /* ================= SEÇÃO PRINCIPAL ================= */
