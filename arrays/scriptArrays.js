@@ -37,6 +37,17 @@ console.log(usuarios)
 let novosUsuarios = usuarios.slice(1, 3) //Copia os itens da posição 1 até a posição 2 (3-1)
 console.log(novosUsuarios)
 
+//Inverter Ordem
+//reverse()
+
+usuarios2.reverse()
+console.log(usuarios2)
+
+//Ordena em ordem alfabética
+//sort()
+
+usuarios2.sort()
+console.log(usuarios2)
 
 
 
