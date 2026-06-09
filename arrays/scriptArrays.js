@@ -49,6 +49,22 @@ console.log(usuarios2)
 usuarios2.sort()
 console.log(usuarios2)
 
+//Percorrer um Array
+for (let usuarios of usuarios2) {
+    console.log(usuarios)
+}
 
+//Percorrer um Array com índice
+for (let indice in usuarios) {
+    console.log(indice)
+    console.log(usuarios2[indice])
+}
 
+//Transforma o Array em Texto
+let nomes = usuarios2.join(" - ") 
+console.log(nomes);
 
+//Juntar os Arrays
+let admin = ["admin1", "admin2"]
+let sistema = usuarios.concat(admin) 
+console.log(sistema)
