@@ -86,14 +86,18 @@ server.put('/cursos/:id', (req, res) => {
 //localhost:3000/cursos/1
 server.delete('/cursos/:id', (req, res) => {
 
-    // Obtém o índice do curso a ser removido
-    const id = req.params.id;
+const { id } = req.params;
+const sql = 'DELETE FROM cursos WHERE id = ?';
 
-    // Remove 1 elemento do array a partir do índice informado
-    cursos.splice(id, 1);
+connection.query(sql, [id], (erro, resultados) => {
+    if (erro) {
+        console.log('Erro ao executar a consulta:', erro);
+        return res.status(500).json({ error: 'Erro ao deletar curso' });
+    }
+    return res.json({ mensagem: 'Curso deletado com sucesso' });
+});
 
-    // Retorna a lista de cursos após a exclusão
-    return res.json(cursos);
+
 });
 
 
