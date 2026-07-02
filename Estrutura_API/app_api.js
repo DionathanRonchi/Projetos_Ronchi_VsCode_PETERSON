@@ -47,14 +47,19 @@ const sql = 'SELECT * FROM cursos WHERE id = ?';
 //{ "name": "Curso de Python" }
 server.post('/cursos', (req, res)=> {
 
-    // Desestrutura a propriedade "name" enviada no corpo da requisição
-    const nome = req.body.nome;
+    const { nome } = req.body;
+    const sql = 'insert into cursos (nome) values (?)';
 
-    // Adiciona o novo curso ao array de cursos
-    cursos.push(nome);
-
-    // Retorna a lista atualizada de cursos
-    return res.json(cursos);    
+    connection.query(sql, [nome], (erro, resultados) => {
+        if(erro){
+            return res.status(500).json({erro: erro.message})
+        }
+        return res.json({
+            mensagem: 'Curso cadastrado com sucesso',
+            id: resultados.insertId,
+            nome: nome
+        });
+    });
 });
 
 //Método HTTP: PUT
