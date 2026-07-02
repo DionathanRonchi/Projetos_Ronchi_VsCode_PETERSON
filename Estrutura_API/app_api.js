@@ -86,24 +86,21 @@ server.put('/cursos/:id', (req, res) => {
 //localhost:3000/cursos/1
 server.delete('/cursos/:id', (req, res) => {
 
-const { id } = req.params;
-const sql = 'DELETE FROM cursos WHERE id = ?';
+    const { id } = req.params;
+    const sql = 'DELETE FROM cursos WHERE id = ?';
 
-connection.query(sql, [id], (erro, resultados) => {
-    if (erro) {
-        console.log('Erro ao executar a consulta:', erro);
-        return res.status(500).json({ error: 'Erro ao deletar curso' });
-    }
-    return res.json({ mensagem: 'Curso deletado com sucesso' });
+    connection.query(sql, [id], (erro, resultados) => {
+        if (erro) {
+            console.log('Erro ao executar a consulta:', erro);
+            return res.status(500).json({ error: 'Erro ao deletar curso' });
+        }
+        return res.json({ mensagem: 'Curso deletado com sucesso' });
+    });
 });
-
-
-});
-
 
 
 //O metodo listen() faz o servidor começar a escutar
 // requisiçoes em uma determinada porta.
 server.listen(3023 , () => {
-    console.log("Servidor rodando na porta 3002");
+    console.log("Servidor rodando na porta 3023");
 });
