@@ -25,7 +25,7 @@ server.get('/destinos', (req, res) => {
 //localhost:3023/destinos/2
 server.get('/destinos/:id', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM destinos WHERE id_destino = ?';
+    const sql = 'SELECT * FROM destinos WHERE ID = ?';
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -43,7 +43,7 @@ server.get('/destinos/:id', (req, res) => {
 //localhost:3023/destinos/pais/Brasil
 server.get('/destinos/pais/:pais', (req, res) => {
     const pais = req.params.pais;
-    const sql = 'SELECT * FROM destinos WHERE pais_destino = ?';
+    const sql = 'SELECT * FROM destinos WHERE País = ?';
     connection.query(sql, [pais], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -59,26 +59,26 @@ server.get('/destinos/pais/:pais', (req, res) => {
 //Método HTTP: POST
 //CRIAR UM NOVO DESTINO
 //localhost:3023/destinos
-//{ "nome_destino": "Roma", "pais_destino": "Itália" }
+//{ "Nome": "Roma", "País": "Itália" }
 server.post('/destinos', (req, res) => {
 
-    const { nome_destino, pais_destino } = req.body;
+    const { Nome, País } = req.body;
 
-    if (!nome_destino || !pais_destino) {
-        return res.status(400).json({ error: 'Os campos nome_destino e pais_destino são obrigatórios' });
+    if (!Nome || !País) {
+        return res.status(400).json({ error: 'Os campos Nome e País são obrigatórios' });
     }
 
-    const sql = 'INSERT INTO destinos (nome_destino, pais_destino) VALUES (?, ?)';
+    const sql = 'INSERT INTO destinos (Nome, País) VALUES (?, ?)';
 
-    connection.query(sql, [nome_destino, pais_destino], (erro, resultados) => {
+    connection.query(sql, [Nome, País], (erro, resultados) => {
         if (erro) {
             return res.status(500).json({ erro: erro.message });
         }
         return res.json({
             mensagem: 'Destino cadastrado com sucesso',
             id: resultados.insertId,
-            nome_destino: nome_destino,
-            pais_destino: pais_destino
+            Nome: Nome,
+            País: País
         });
     });
 });
@@ -86,19 +86,19 @@ server.post('/destinos', (req, res) => {
 //Método HTTP: PUT
 //ATUALIZAR UM DESTINO
 //localhost:3023/destinos/1
-//{ "nome_destino": "Rio de Janeiro", "pais_destino": "Brasil" }
+//{ "Nome": "Rio de Janeiro", "País": "Brasil" }
 server.put('/destinos/:id', (req, res) => {
 
     const id = req.params.id;
-    const { nome_destino, pais_destino } = req.body;
+    const { Nome, País } = req.body;
 
-    if (!nome_destino || !pais_destino) {
-        return res.status(400).json({ error: 'Os campos nome_destino e pais_destino são obrigatórios' });
+    if (!Nome || !País) {
+        return res.status(400).json({ error: 'Os campos Nome e País são obrigatórios' });
     }
 
-    const sql = 'UPDATE destinos SET nome_destino = ?, pais_destino = ? WHERE id_destino = ?';
+    const sql = 'UPDATE destinos SET Nome = ?, País = ? WHERE ID = ?';
 
-    connection.query(sql, [nome_destino, pais_destino, id], (erro, resultados) => {
+    connection.query(sql, [Nome, País, id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
             return res.status(500).json({ error: 'Erro ao atualizar destino' });
@@ -116,7 +116,7 @@ server.put('/destinos/:id', (req, res) => {
 server.delete('/destinos/:id', (req, res) => {
 
     const { id } = req.params;
-    const sql = 'DELETE FROM destinos WHERE id_destino = ?';
+    const sql = 'DELETE FROM destinos WHERE ID = ?';
 
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
