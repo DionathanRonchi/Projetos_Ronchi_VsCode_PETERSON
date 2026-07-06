@@ -26,7 +26,7 @@ server.get('/destinos', (req, res) => {
 //OBS: precisa vir ANTES de /destinos/:id para o Express não confundir "reservas" com um ID
 server.get('/destinos/:id/reservas', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM reservas WHERE Destino_ID = ?';
+    const sql = 'SELECT * FROM reservas WHERE id_destino = ?';
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -41,7 +41,7 @@ server.get('/destinos/:id/reservas', (req, res) => {
 //localhost:3023/destinos/2
 server.get('/destinos/:id', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM destinos WHERE ID = ?';
+    const sql = 'SELECT * FROM destinos WHERE id_destino = ?';
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -59,7 +59,7 @@ server.get('/destinos/:id', (req, res) => {
 //localhost:3023/destinos/pais/Brasil
 server.get('/destinos/pais/:pais', (req, res) => {
     const pais = req.params.pais;
-    const sql = 'SELECT * FROM destinos WHERE País = ?';
+    const sql = 'SELECT * FROM destinos WHERE pais = ?';
     connection.query(sql, [pais], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -75,26 +75,26 @@ server.get('/destinos/pais/:pais', (req, res) => {
 //Método HTTP: POST
 //CRIAR UM NOVO DESTINO
 //localhost:3023/destinos
-//{ "Nome": "Roma", "País": "Itália" }
+//{ "nome": "Roma", "pais": "Itália" }
 server.post('/destinos', (req, res) => {
 
-    const { Nome, País } = req.body;
+    const { nome, pais } = req.body;
 
-    if (!Nome || !País) {
-        return res.status(400).json({ error: 'Os campos Nome e País são obrigatórios' });
+    if (!nome) {
+        return res.status(400).json({ error: 'O campo nome é obrigatório' });
     }
 
-    const sql = 'INSERT INTO destinos (Nome, País) VALUES (?, ?)';
+    const sql = 'INSERT INTO destinos (nome, pais) VALUES (?, ?)';
 
-    connection.query(sql, [Nome, País], (erro, resultados) => {
+    connection.query(sql, [nome, pais], (erro, resultados) => {
         if (erro) {
             return res.status(500).json({ erro: erro.message });
         }
         return res.json({
             mensagem: 'Destino cadastrado com sucesso',
             id: resultados.insertId,
-            Nome: Nome,
-            País: País
+            nome: nome,
+            pais: pais
         });
     });
 });
@@ -102,19 +102,19 @@ server.post('/destinos', (req, res) => {
 //Método HTTP: PUT
 //ATUALIZAR UM DESTINO
 //localhost:3023/destinos/1
-//{ "Nome": "Rio de Janeiro", "País": "Brasil" }
+//{ "nome": "Rio de Janeiro", "pais": "Brasil" }
 server.put('/destinos/:id', (req, res) => {
 
     const id = req.params.id;
-    const { Nome, País } = req.body;
+    const { nome, pais } = req.body;
 
-    if (!Nome || !País) {
-        return res.status(400).json({ error: 'Os campos Nome e País são obrigatórios' });
+    if (!nome) {
+        return res.status(400).json({ error: 'O campo nome é obrigatório' });
     }
 
-    const sql = 'UPDATE destinos SET Nome = ?, País = ? WHERE ID = ?';
+    const sql = 'UPDATE destinos SET nome = ?, pais = ? WHERE id_destino = ?';
 
-    connection.query(sql, [Nome, País, id], (erro, resultados) => {
+    connection.query(sql, [nome, pais, id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
             return res.status(500).json({ error: 'Erro ao atualizar destino' });
@@ -132,7 +132,7 @@ server.put('/destinos/:id', (req, res) => {
 server.delete('/destinos/:id', (req, res) => {
 
     const { id } = req.params;
-    const sql = 'DELETE FROM destinos WHERE ID = ?';
+    const sql = 'DELETE FROM destinos WHERE id_destino = ?';
 
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
@@ -151,7 +151,7 @@ server.delete('/destinos/:id', (req, res) => {
 //localhost:3023/clientes/ordenados
 //OBS: precisa vir ANTES de /clientes/:id para o Express não confundir "ordenados" com um ID
 server.get('/clientes/ordenados', (req, res) => {
-    const sql = 'SELECT * FROM clientes ORDER BY Nome ASC';
+    const sql = 'SELECT * FROM clientes ORDER BY nome ASC';
     connection.query(sql, (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -167,7 +167,7 @@ server.get('/clientes/ordenados', (req, res) => {
 //OBS: precisa vir ANTES de /clientes/:id para o Express não confundir "reservas" com um ID
 server.get('/clientes/:id/reservas', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM reservas WHERE Cliente_ID = ?';
+    const sql = 'SELECT * FROM reservas WHERE id_cliente = ?';
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -196,7 +196,7 @@ server.get('/clientes', (req, res) => {
 //localhost:3023/clientes/1
 server.get('/clientes/:id', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM clientes WHERE ID = ?';
+    const sql = 'SELECT * FROM clientes WHERE id_cliente = ?';
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -212,27 +212,27 @@ server.get('/clientes/:id', (req, res) => {
 //Método HTTP: POST
 //CRIAR UM NOVO CLIENTE
 //localhost:3023/clientes
-//{ "Nome": "Maria Silva", "Email": "maria@email.com", "Telefone": "47999998888" }
+//{ "nome": "Maria Silva", "email": "maria@email.com", "telefone": "47999998888" }
 server.post('/clientes', (req, res) => {
 
-    const { Nome, Email, Telefone } = req.body;
+    const { nome, email, telefone } = req.body;
 
-    if (!Nome || !Email || !Telefone) {
-        return res.status(400).json({ error: 'Os campos Nome, Email e Telefone são obrigatórios' });
+    if (!nome) {
+        return res.status(400).json({ error: 'O campo nome é obrigatório' });
     }
 
-    const sql = 'INSERT INTO clientes (Nome, Email, Telefone) VALUES (?, ?, ?)';
+    const sql = 'INSERT INTO clientes (nome, email, telefone) VALUES (?, ?, ?)';
 
-    connection.query(sql, [Nome, Email, Telefone], (erro, resultados) => {
+    connection.query(sql, [nome, email, telefone], (erro, resultados) => {
         if (erro) {
             return res.status(500).json({ erro: erro.message });
         }
         return res.json({
             mensagem: 'Cliente cadastrado com sucesso',
             id: resultados.insertId,
-            Nome: Nome,
-            Email: Email,
-            Telefone: Telefone
+            nome: nome,
+            email: email,
+            telefone: telefone
         });
     });
 });
@@ -240,19 +240,19 @@ server.post('/clientes', (req, res) => {
 //Método HTTP: PUT
 //ATUALIZAR UM CLIENTE
 //localhost:3023/clientes/1
-//{ "Nome": "Maria Silva", "Email": "maria@email.com", "Telefone": "47999998888" }
+//{ "nome": "Maria Silva", "email": "maria@email.com", "telefone": "47999998888" }
 server.put('/clientes/:id', (req, res) => {
 
     const id = req.params.id;
-    const { Nome, Email, Telefone } = req.body;
+    const { nome, email, telefone } = req.body;
 
-    if (!Nome || !Email || !Telefone) {
-        return res.status(400).json({ error: 'Os campos Nome, Email e Telefone são obrigatórios' });
+    if (!nome) {
+        return res.status(400).json({ error: 'O campo nome é obrigatório' });
     }
 
-    const sql = 'UPDATE clientes SET Nome = ?, Email = ?, Telefone = ? WHERE ID = ?';
+    const sql = 'UPDATE clientes SET nome = ?, email = ?, telefone = ? WHERE id_cliente = ?';
 
-    connection.query(sql, [Nome, Email, Telefone, id], (erro, resultados) => {
+    connection.query(sql, [nome, email, telefone, id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
             return res.status(500).json({ error: 'Erro ao atualizar cliente' });
@@ -270,7 +270,7 @@ server.put('/clientes/:id', (req, res) => {
 server.delete('/clientes/:id', (req, res) => {
 
     const { id } = req.params;
-    const sql = 'DELETE FROM clientes WHERE ID = ?';
+    const sql = 'DELETE FROM clientes WHERE id_cliente = ?';
 
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
@@ -304,7 +304,7 @@ server.get('/reservas', (req, res) => {
 //localhost:3023/reservas/1
 server.get('/reservas/:id', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM reservas WHERE ID = ?';
+    const sql = 'SELECT * FROM reservas WHERE id_reserva = ?';
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -320,27 +320,27 @@ server.get('/reservas/:id', (req, res) => {
 //Método HTTP: POST
 //CRIAR UMA NOVA RESERVA
 //localhost:3023/reservas
-//{ "Cliente_ID": 1, "Destino_ID": 2, "Data_Viagem": "2026-08-15" }
+//{ "id_cliente": 1, "id_destino": 2, "data_viagem": "2026-08-15" }
 server.post('/reservas', (req, res) => {
 
-    const { Cliente_ID, Destino_ID, Data_Viagem } = req.body;
+    const { id_cliente, id_destino, data_viagem } = req.body;
 
-    if (!Cliente_ID || !Destino_ID || !Data_Viagem) {
-        return res.status(400).json({ error: 'Os campos Cliente_ID, Destino_ID e Data_Viagem são obrigatórios' });
+    if (!id_cliente || !id_destino || !data_viagem) {
+        return res.status(400).json({ error: 'Os campos id_cliente, id_destino e data_viagem são obrigatórios' });
     }
 
-    const sql = 'INSERT INTO reservas (Cliente_ID, Destino_ID, Data_Viagem) VALUES (?, ?, ?)';
+    const sql = 'INSERT INTO reservas (id_cliente, id_destino, data_viagem) VALUES (?, ?, ?)';
 
-    connection.query(sql, [Cliente_ID, Destino_ID, Data_Viagem], (erro, resultados) => {
+    connection.query(sql, [id_cliente, id_destino, data_viagem], (erro, resultados) => {
         if (erro) {
             return res.status(500).json({ erro: erro.message });
         }
         return res.json({
             mensagem: 'Reserva cadastrada com sucesso',
             id: resultados.insertId,
-            Cliente_ID: Cliente_ID,
-            Destino_ID: Destino_ID,
-            Data_Viagem: Data_Viagem
+            id_cliente: id_cliente,
+            id_destino: id_destino,
+            data_viagem: data_viagem
         });
     });
 });
@@ -348,19 +348,19 @@ server.post('/reservas', (req, res) => {
 //Método HTTP: PUT
 //ATUALIZAR UMA RESERVA
 //localhost:3023/reservas/1
-//{ "Cliente_ID": 1, "Destino_ID": 2, "Data_Viagem": "2026-08-20" }
+//{ "id_cliente": 1, "id_destino": 2, "data_viagem": "2026-08-20" }
 server.put('/reservas/:id', (req, res) => {
 
     const id = req.params.id;
-    const { Cliente_ID, Destino_ID, Data_Viagem } = req.body;
+    const { id_cliente, id_destino, data_viagem } = req.body;
 
-    if (!Cliente_ID || !Destino_ID || !Data_Viagem) {
-        return res.status(400).json({ error: 'Os campos Cliente_ID, Destino_ID e Data_Viagem são obrigatórios' });
+    if (!id_cliente || !id_destino || !data_viagem) {
+        return res.status(400).json({ error: 'Os campos id_cliente, id_destino e data_viagem são obrigatórios' });
     }
 
-    const sql = 'UPDATE reservas SET Cliente_ID = ?, Destino_ID = ?, Data_Viagem = ? WHERE ID = ?';
+    const sql = 'UPDATE reservas SET id_cliente = ?, id_destino = ?, data_viagem = ? WHERE id_reserva = ?';
 
-    connection.query(sql, [Cliente_ID, Destino_ID, Data_Viagem, id], (erro, resultados) => {
+    connection.query(sql, [id_cliente, id_destino, data_viagem, id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
             return res.status(500).json({ error: 'Erro ao atualizar reserva' });
@@ -378,7 +378,7 @@ server.put('/reservas/:id', (req, res) => {
 server.delete('/reservas/:id', (req, res) => {
 
     const { id } = req.params;
-    const sql = 'DELETE FROM reservas WHERE ID = ?';
+    const sql = 'DELETE FROM reservas WHERE id_reserva = ?';
 
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
