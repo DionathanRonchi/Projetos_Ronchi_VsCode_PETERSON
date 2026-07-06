@@ -26,7 +26,7 @@ server.get('/destinos', (req, res) => {
 //OBS: precisa vir ANTES de /destinos/:id para o Express não confundir "reservas" com um ID
 server.get('/destinos/:id/reservas', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM reservas WHERE id_destino = ?';
+    const sql = "SELECT id_reserva, id_cliente, id_destino, DATE_FORMAT(data_viagem, '%d/%m/%Y') AS data_viagem FROM reservas WHERE id_destino = ?";
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -146,6 +146,7 @@ server.delete('/destinos/:id', (req, res) => {
     });
 });
 
+
 //Método HTTP: GET
 //LISTAR CLIENTES EM ORDEM ALFABÉTICA (CONSULTA)
 //localhost:3023/clientes/ordenados
@@ -167,7 +168,7 @@ server.get('/clientes/ordenados', (req, res) => {
 //OBS: precisa vir ANTES de /clientes/:id para o Express não confundir "reservas" com um ID
 server.get('/clientes/:id/reservas', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM reservas WHERE id_cliente = ?';
+    const sql = "SELECT id_reserva, id_cliente, id_destino, DATE_FORMAT(data_viagem, '%d/%m/%Y') AS data_viagem FROM reservas WHERE id_cliente = ?";
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -289,7 +290,7 @@ server.delete('/clientes/:id', (req, res) => {
 //LISTAR TODAS AS RESERVAS
 //localhost:3023/reservas
 server.get('/reservas', (req, res) => {
-    const sql = 'SELECT * FROM reservas';
+    const sql = "SELECT id_reserva, id_cliente, id_destino, DATE_FORMAT(data_viagem, '%d/%m/%Y') AS data_viagem FROM reservas";
     connection.query(sql, (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -304,7 +305,7 @@ server.get('/reservas', (req, res) => {
 //localhost:3023/reservas/1
 server.get('/reservas/:id', (req, res) => {
     const id = req.params.id;
-    const sql = 'SELECT * FROM reservas WHERE id_reserva = ?';
+    const sql = "SELECT id_reserva, id_cliente, id_destino, DATE_FORMAT(data_viagem, '%d/%m/%Y') AS data_viagem FROM reservas WHERE id_reserva = ?";
     connection.query(sql, [id], (erro, resultados) => {
         if (erro) {
             console.log('Erro ao executar a consulta:', erro);
@@ -320,7 +321,7 @@ server.get('/reservas/:id', (req, res) => {
 //Método HTTP: POST
 //CRIAR UMA NOVA RESERVA
 //localhost:3023/reservas
-//{ "id_cliente": 1, "id_destino": 2, "data_viagem": "2026-08-15" }
+//{ "id_cliente": 1, "id_destino": 2, "data_viagem": "15/08/2026" }
 server.post('/reservas', (req, res) => {
 
     const { id_cliente, id_destino, data_viagem } = req.body;
@@ -329,7 +330,7 @@ server.post('/reservas', (req, res) => {
         return res.status(400).json({ error: 'Os campos id_cliente, id_destino e data_viagem são obrigatórios' });
     }
 
-    const sql = 'INSERT INTO reservas (id_cliente, id_destino, data_viagem) VALUES (?, ?, ?)';
+    const sql = "INSERT INTO reservas (id_cliente, id_destino, data_viagem) VALUES (?, ?, STR_TO_DATE(?, '%d/%m/%Y'))";
 
     connection.query(sql, [id_cliente, id_destino, data_viagem], (erro, resultados) => {
         if (erro) {
@@ -348,7 +349,7 @@ server.post('/reservas', (req, res) => {
 //Método HTTP: PUT
 //ATUALIZAR UMA RESERVA
 //localhost:3023/reservas/1
-//{ "id_cliente": 1, "id_destino": 2, "data_viagem": "2026-08-20" }
+//{ "id_cliente": 1, "id_destino": 2, "data_viagem": "20/08/2026" }
 server.put('/reservas/:id', (req, res) => {
 
     const id = req.params.id;
@@ -358,7 +359,7 @@ server.put('/reservas/:id', (req, res) => {
         return res.status(400).json({ error: 'Os campos id_cliente, id_destino e data_viagem são obrigatórios' });
     }
 
-    const sql = 'UPDATE reservas SET id_cliente = ?, id_destino = ?, data_viagem = ? WHERE id_reserva = ?';
+    const sql = "UPDATE reservas SET id_cliente = ?, id_destino = ?, data_viagem = STR_TO_DATE(?, '%d/%m/%Y') WHERE id_reserva = ?";
 
     connection.query(sql, [id_cliente, id_destino, data_viagem, id], (erro, resultados) => {
         if (erro) {
