@@ -3,6 +3,7 @@ const express = require('express');
 const connection = require('./db');
 const cors = require('cors');
 const server = express();
+
 server.use(cors());
 //Middleware que permite o servidor entender requisições com JSON no corpo (req.body)
 server.use(express.json());
